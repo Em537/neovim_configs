@@ -1,60 +1,64 @@
-return {
-  {
-    "williamboman/mason.nvim",
-    config = function()
-      require("mason").setup()
-    end,
-  },
-  {
-    "neovim/nvim-lspconfig",
-    dependencies = { "williamboman/mason-lspconfig.nvim" },
-    config = function()
-      local servers = { "lua_ls", "asm_lsp", "bashls", "clangd", "basedpyright" }
+return {}
 
-      require("mason-lspconfig").setup({
-        ensure_installed = servers,
-      })
 
-      -- Custom configuration for lua_ls
-      vim.lsp.config("lua_ls", {
-        settings = {
-          Lua = {
-            diagnostics = {
-              globals = { "vim" },
-            },
-            workspace = {
-              library = { vim.env.VIMRUNTIME },
-              checkThirdParty = false,
-            },
-            telemetry = { enable = false },
-          },
-        },
-      })
 
-      -- Enable all servers
-      for _, server in ipairs(servers) do
-        vim.lsp.enable(server)
-      end
-
-      -- Restore :LspInfo command (aliases to :checkhealth vim.lsp)
-      vim.api.nvim_create_user_command("LspInfo", "checkhealth vim.lsp", {
-        desc = "Shows status of active LSP clients",
-      })
-
-      -- Keymaps when an LSP client attaches to a buffer
-      vim.api.nvim_create_autocmd("LspAttach", {
-        group = vim.api.nvim_create_augroup("UserLspConfig", {}),
-        callback = function(event)
-          local opts = { buffer = event.buf }
-          vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
-          vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
-          vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
-          vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
-          vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
-          vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
-          vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts)
-        end,
-      })
-    end,
-  },
-}
+-- return {
+--   {
+--     "williamboman/mason.nvim",
+--     config = function()
+--       require("mason").setup()
+--     end,
+--   },
+--   {
+--     "neovim/nvim-lspconfig",
+--     dependencies = { "williamboman/mason-lspconfig.nvim" },
+--     config = function()
+--       local servers = { "lua_ls", "asm_lsp", "bashls", "clangd", "basedpyright" }
+--
+--       require("mason-lspconfig").setup({
+--         ensure_installed = servers,
+--       })
+--
+--       -- Custom configuration for lua_ls
+--       vim.lsp.config("lua_ls", {
+--         settings = {
+--           Lua = {
+--             diagnostics = {
+--               globals = { "vim" },
+--             },
+--             workspace = {
+--               library = { vim.env.VIMRUNTIME },
+--               checkThirdParty = false,
+--             },
+--             telemetry = { enable = false },
+--           },
+--         },
+--       })
+--
+--       -- Enable all servers
+--       for _, server in ipairs(servers) do
+--         vim.lsp.enable(server)
+--       end
+--
+--       -- Restore :LspInfo command (aliases to :checkhealth vim.lsp)
+--       vim.api.nvim_create_user_command("LspInfo", "checkhealth vim.lsp", {
+--         desc = "Shows status of active LSP clients",
+--       })
+--
+--       -- Keymaps when an LSP client attaches to a buffer
+--       vim.api.nvim_create_autocmd("LspAttach", {
+--         group = vim.api.nvim_create_augroup("UserLspConfig", {}),
+--         callback = function(event)
+--           local opts = { buffer = event.buf }
+--           vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+--           vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+--           vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
+--           vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
+--           vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
+--           vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
+--           vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts)
+--         end,
+--       })
+--     end,
+--   },
+-- }
