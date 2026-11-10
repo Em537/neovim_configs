@@ -45,13 +45,6 @@ Kickstart Guide:
 
   TODO: The very first thing you should do is to run the command `:Tutor` in Neovim.
 
-    If you don't know what this means, type the following:
-      - <escape key>
-      - :
-      - Tutor
-      - <enter key>
-
-    (If you already know the Neovim basics, you can skip this step.)
 
   Once you've completed that, you can continue working through **AND READING** the rest
   of the kickstart init.lua.
@@ -108,6 +101,7 @@ do
 
 	-- Make line numbers default
 	vim.o.number = true
+  
   vim.o.relativenumber = true
 	-- You can also add relative line numbers, to help with jumping.
 	--  Experiment for yourself to see if you like it!
@@ -141,7 +135,9 @@ do
 	vim.o.signcolumn = "yes"
 
 	-- Decrease update time
-	vim.o.updatetime = 250
+	vim.o.updatetime = 200
+
+  vim.o.showcmd = true
 
 	-- Decrease mapped sequence wait time
 	vim.o.timeoutlen = 300
@@ -149,6 +145,15 @@ do
 	-- Configure how new splits should be opened
 	vim.o.splitright = true
 	vim.o.splitbelow = true
+
+
+-- Changes cursor in insert mode from | to block and blink in insert mode.
+vim.opt.guicursor = {
+      "n-v-c-sm:block-blinkwait400-blinkoff400-blinkon400",
+      "i-ci-sm:block",
+      "r-cr-o:hor20",
+    }
+
 
 	-- Sets how neovim will display certain whitespace characters in the editor.
 	--  See `:help 'list'`
@@ -165,10 +170,10 @@ do
 	vim.o.inccommand = "split"
 
 	-- Show which line your cursor is on
-	vim.o.cursorline = true
+	vim.o.cursorline = false
 
 	-- Minimal number of screen lines to keep above and below the cursor.
-	vim.o.scrolloff = 10
+	vim.o.scrolloff = 25
 
 	-- if performing an operation that would fail due to unsaved changes in the buffer (like `:q`),
 	-- instead raise a dialog asking if you wish to save the current file(s)
@@ -187,6 +192,12 @@ do
 	-- Clear highlights on search when pressing <Esc> in normal mode
 	--  See `:help hlsearch`
 	vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
+	vim.keymap.set("n", "<C-c>", "<cmd>nohlsearch<CR>")
+
+-- Shows search results as I type them:
+vim.opt.incsearch = true
+-- Turn off wrapping, although probably off by default:
+vim.wo.wrap = false
 
 	-- Diagnostic Config & Keymaps
 	--  See `:help vim.diagnostic.Opts`
