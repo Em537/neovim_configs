@@ -108,7 +108,7 @@ do
 	-- vim.o.relativenumber = true
 
 	-- Enable mouse mode, can be useful for resizing splits for example!
-	vim.o.mouse = "a"
+	vim.o.mouse = ""
 
 	-- Don't show the mode, since it's already in the status line
 	vim.o.showmode = false
@@ -255,6 +255,28 @@ vim.wo.wrap = false
 end,
    { desc = "Run 'run build' command" }
     )
+
+
+
+
+
+  -- for make run while being able to run to buffer easily. 
+	local last_file_buf = nil
+vim.keymap.set({ "n", "t" }, "<C-s>", function()
+    vim.cmd("w")
+		if vim.bo.buftype == "terminal" then
+			if last_file_buf and vim.api.nvim_buf_is_valid(last_file_buf) then
+				vim.api.nvim_set_current_buf(last_file_buf)
+			end
+			return
+		end
+
+		last_file_buf = vim.api.nvim_get_current_buf()
+		vim.cmd("enew")
+		vim.fn.termopen("cd .. && make run")
+		vim.cmd("startinsert")
+	end, { desc = "Toggle run make in terminal and return to file" })
+
 
 
 
